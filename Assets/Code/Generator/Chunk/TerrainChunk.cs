@@ -115,12 +115,13 @@ namespace TerrainGenerator
 
             Data.size = new Vector3(Settings.Length, Settings.Height, Settings.Length);
             var newTerrainGameObject = Terrain.CreateTerrainGameObject(Data);
+			newTerrainGameObject.name="Terrain" + Position.X.ToString () + ":" + Position.Z.ToString ();
             newTerrainGameObject.transform.position = new Vector3(Position.X * Settings.Length, 0, Position.Z * Settings.Length);
 
 			// pruebas de texturas
 			var _m1 = new TerrainMeshBuilder ().CreateMesh (Settings.Length);
 			quad = (GameObject)new GameObject (
-				"mesh " + Position.X.ToString() + 	":" + Position.Z.ToString(),
+				"HeightTexturemesh " + Position.X.ToString() + 	":" + Position.Z.ToString(),
 				typeof(MeshRenderer),
 				typeof(MeshFilter)
 			);
