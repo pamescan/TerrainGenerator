@@ -35,17 +35,7 @@ namespace TerrainGenerator
 
             Position = new Vector2i(x, z);
 
-			// pruebas de texturas
-			var _m1 = new TerrainMeshBuilder ().CreateMesh (settings.Length);
-			quad = (GameObject)new GameObject (
-				"mesh " + x.ToString() + 	":" + z.ToString(),
-				typeof(MeshRenderer),
-				typeof(MeshFilter)
-			);
-			quad.GetComponent<MeshFilter>().mesh = _m1;
-			quad.transform.position = new Vector3(Position.X * Settings.Length+ settings.Length/2, 0, Position.Z * Settings.Length+ settings.Length/2);
-			quad.GetComponent<MeshRenderer> ().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-			quad.GetComponent<MeshRenderer> ().receiveShadows = false;
+
 
 
 
@@ -121,11 +111,25 @@ namespace TerrainGenerator
             Data.alphamapResolution = Settings.AlphamapResolution;
             Data.SetHeights(0, 0, Heightmap);
             ApplyTextures(Data);
-			quad.GetComponent<Renderer> ().material.mainTexture = GenerateHeightmapTexture ();
+
 
             Data.size = new Vector3(Settings.Length, Settings.Height, Settings.Length);
             var newTerrainGameObject = Terrain.CreateTerrainGameObject(Data);
             newTerrainGameObject.transform.position = new Vector3(Position.X * Settings.Length, 0, Position.Z * Settings.Length);
+
+			// pruebas de texturas
+			var _m1 = new TerrainMeshBuilder ().CreateMesh (Settings.Length);
+			quad = (GameObject)new GameObject (
+				"mesh " + Position.X.ToString() + 	":" + Position.Z.ToString(),
+				typeof(MeshRenderer),
+				typeof(MeshFilter)
+			);
+			quad.GetComponent<MeshFilter>().mesh = _m1;
+			quad.transform.position = new Vector3(Position.X * Settings.Length+ Settings.Length/2, 0, Position.Z * Settings.Length+ Settings.Length/2);
+			quad.GetComponent<MeshRenderer> ().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+			quad.GetComponent<MeshRenderer> ().receiveShadows = false;
+			quad.GetComponent<Renderer> ().material.mainTexture = GenerateHeightmapTexture ();
+
 
             Terrain = newTerrainGameObject.GetComponent<Terrain>();
             Terrain.heightmapPixelError = 8;
